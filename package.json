@@ -1,0 +1,94 @@
+{
+  "name": "vue3-ts-electron-test",
+  "private": true,
+  "author": "woemloe",
+  "version": "0.0.0",
+  "main": "electron/electron.js",
+  "description": "electron vue3 ts app",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "serve": "vite preview",
+    "electron": "wait-on tcp:3000 && cross-env IS_DEV=true electron .",
+    "electron:pack": "electron-builder --dir",
+    "dev-e": "concurrently -k \"cross-env BROWSER=none yarn dev\" \"yarn electron\"",
+    "electron:builder": "electron-builder",
+    "build:for:electron": "vue-tsc --noEmit && cross-env ELECTRON=true vite build",
+    "app:build": "yarn build:for:electron && yarn electron:builder",
+    "start": "electron-forge start",
+    "pack": "electron-forge package",
+    "make": "electron-forge make",
+    "pack-linux": "electron-forge package --arch=x64 --platform=linux",
+    "make-linux": "electron-forge make --platform=linux --arch=x64"
+  },
+  "dependencies": {
+    "@babel/core": "^7.17.8",
+    "@babel/register": "^7.17.7",
+    "electron-squirrel-startup": "^1.0.0",
+    "express": "^4.17.3",
+    "vue": "^3.2.25",
+    "vue-router": "^4.0.13"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^6.0.0-beta.63",
+    "@electron-forge/maker-deb": "^6.0.0-beta.63",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.63",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.63",
+    "@electron-forge/maker-zip": "^6.0.0-beta.63",
+    "@vitejs/plugin-vue": "^2.3.0",
+    "concurrently": "^7.0.0",
+    "cross-env": "^7.0.3",
+    "electron": "^18.0.1",
+    "typescript": "^4.5.4",
+    "vite": "^2.9.0",
+    "vue-tsc": "^0.29.8",
+    "wait-on": "^6.0.1"
+  },
+  "build": {
+    "appId": "woelmoe test app",
+    "productName": "WoelmoeApp",
+    "copyright": "Copyright © 2019 ${woelmoe}",
+    "mac": {
+      "category": "public.app-category.utilities"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*"
+    ],
+    "directories": {
+      "buildResources": "assets",
+      "output": "dist_electron"
+    }
+  },
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "vue3_ts_electron_test"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
+    }
+  }
+}
