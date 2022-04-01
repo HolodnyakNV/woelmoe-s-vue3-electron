@@ -1,4 +1,4 @@
-# Synerget5 desktop
+# Сборка vue3 electronjs typescript ssr
 
 ### Запуск для разработки
 
